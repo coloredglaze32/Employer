@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新建部门</title>
+</head>
+<body>
+<form method="POST" action="/add/list">
+    {% csrf_token %}
+    <input type="text" placeholder="请输入部门名称" name="title"><br>
+    <input type="submit" value="提交" >
+</form>
+</body>
+</html>
