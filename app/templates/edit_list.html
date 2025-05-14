@@ -4,12 +4,12 @@
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="card shadow" style="width: 400px;">
         <div class="card-body">
-            <h4 class="card-title text-center mb-4">新建部门</h4>
-            <form method="POST" action="/add/list">
+            <h4 class="card-title text-center mb-4">编辑部门</h4>
+            <form method="post">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="title" class="form-label">部门名称</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="请输入部门名称" required>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ obj.title }}" required>
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary btn-lg" style="transition: background 0.3s;" onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#0d6efd'">
