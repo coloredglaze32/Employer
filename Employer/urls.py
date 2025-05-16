@@ -20,8 +20,16 @@ from app import views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
+    
+    # 部门管理
     path("depart/list", views.depart_list),
     path("add/list", views.add_list),
     path("edit/<int:nid>/list", views.edit_list),
-    path("delete/list", views.delete_list)
+    path("delete/list", views.delete_list),
+    
+    # 用户管理
+    path("user/list", views.user_list),
+    path("add/user", views.add_user),
+    path("delete/user", views.delete_user),
+    path("edit/<int:nid>/user", views.edit_user),
 ]

@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow" style="width: 400px;">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4">编辑用户</h4>
+            <form method="POST" >
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="form-group">
+                        <label >{{ field.label }}</label>
+                        {{ field }}
+                    </div><br>
+                {% endfor %}
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg" style="transition: background 0.3s;" onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#0d6efd'">
+                        提交
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
