@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from app.models import Department, UserInfo
+from app.models import Department, UserInfo, PrettyNum
 
 # Create your views here.
 
@@ -86,4 +86,50 @@ def edit_user(request, nid):
         form.save()
         return redirect("/user/list")
     return render(request, "edit_user.html", {"form":form})
+
+def pretty_list(request):
+    # 靓号列表
+    data_dict = {}
+    search_data = request.GET.get("q", "")
+    if search_data:
+        data_dict["mobile__contains"] = search_data
+    prettyList = PrettyNum.objects.filter(**data_dict).order_by("-level")
+    return render(request, "pretty_list.html", {"prettyList":prettyList})
+
+class PrettyNumForm(forms.ModelForm):
+    class Meta:
+        model = PrettyNum
+        fields = ["mobile", "price", "level", "status"]
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            field.widget.attrs = {"class":"form-control"}
+
+def add_pretty(request):
+    if request.method == "GET":
+        form = PrettyNumForm()
+        return render(request, "add_pretty.html", {"form":form})
+    
+    form = PrettyNumForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect("/pretty/list")
+    return render(request, "add_pretty.html", {"form":form})
+
+def edit_pretty(request, nid):
+    row_object = PrettyNum.objects.filter(id=nid).first()
+    if request.method == "GET":
+        form = PrettyNumForm(instance=row_object)
+        return render(request, "edit_pretty.html", {"form":form})   
+    
+    form = PrettyNumForm(request.POST, instance=row_object)
+    if form.is_valid():
+        form.save()
+        return redirect("/pretty/list")
+    return render(request, "edit_pretty.html", {"form":form})
+
+def delete_pretty(request, nid):
+    PrettyNum.objects.filter(id=nid).delete()
+    return redirect("/pretty/list")
 
